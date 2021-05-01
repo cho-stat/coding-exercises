@@ -7,7 +7,7 @@ def can_two_movies_fill_flight(movie_lengths, flight_length):
     i = 0
     while i < len(movie_lengths) - 1: 
         first_movie_length = movie_lengths[i]
-        second_movie_lengths = set(movie_lengths[(i+1):])
+        second_movie_lengths = set(movie_lengths[(i+1):]) 
         second_movie_length = flight_length - first_movie_length
         if second_movie_length in second_movie_lengths:
             return True
