@@ -7,22 +7,25 @@ def get_products_of_all_ints_except_at_index(int_list):
     # produce [84, 12, 28, 21]
     # Rule: you cannot use division in your solution 
 
-    # Pre-allocate a list to hold each product
-    product_list = [1 for x in int_list]
-    
-    i = 0 
     n = len(int_list)
     
+    product_list = [1 for x in int_list]
+    i = 1
     while i < n: 
-        new_product_list = [int_list[i]*x for x in product_list]
-        new_product_list[i] = product_list[i]
-        product_list = new_product_list
-        i+=1 
-
+        product_list[i] = int_list[i-1]*product_list[i-1]
+        i+=1
+    
+    after_prod = 1
+    i = n-2
+    while i >= 0:
+        after_prod = after_prod * int_list[i+1]
+        product_list[i] = after_prod*product_list[i]
+        i += -1
+    
     return product_list
     
-    # time: n * n = O(n^2)
-    # space: O(n + n) = O(n)
+    # time: n * n = O(n)
+    # space: O(n) = O(n)
 
 
 
