@@ -1,26 +1,28 @@
 import unittest
 
 def is_first_come_first_served(take_out_orders, dine_in_orders, served_orders):
-    
-    # Check if there are more served orders than recorded orders
-    if len(served_orders) > len(take_out_orders) + len(dine_in_orders): 
-        return False
 
     # Check if we're serving orders first-come, first-served
-    while len(served_orders) > 0: 
-        served = served_orders.pop(0)
-        
-        if len(take_out_orders) > 0 and served == take_out_orders[0]: 
-            take_out_orders.pop(0)
-        elif len(dine_in_orders) > 0 and served == dine_in_orders[0]:
-            dine_in_orders.pop(0)
-        else: 
-            return False
     
-    if len(dine_in_orders) > 0 or len(take_out_orders) > 0:
-        return False
-    else:
-        return True
+    i = 0 
+    n = len(served_orders)
+    t = len(take_out_orders)
+    d = len(dine_in_orders)
+    take_out_idx = 0
+    dine_in_idx = 0
+    
+    while i < n:
+        if take_out_idx < t and served_orders[i] == take_out_orders[take_out_idx]:
+            take_out_idx += 1
+        elif dine_in_idx < d and served_orders[i] == dine_in_orders[dine_in_idx]:
+            dine_in_idx += 1 
+        else: 
+            # the current order does not match any of the
+            # take out or dine in orders that should be served next
+            return False
+        i += 1
+    
+    return True if take_out_idx == t and dine_in_idx == d else False 
 
 
 
