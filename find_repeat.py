@@ -2,15 +2,27 @@ import unittest
 
 
 def find_repeat(numbers):
-
-    # Find a number that appears more than once
-    number_dict = {}
-    for i in numbers: 
-        if i in number_dict: 
-            return i 
-        else: 
-            number_dict[i] = 1
     
+    n = len(numbers)
+    floor_int = min(numbers)
+    ceil_int = max(numbers)
+
+    while ceil_int - floor_int > 0:     
+        midpt = (floor_int + ceil_int) // 2
+        left_count = 0
+    
+        for i in numbers: 
+            if i <= midpt and i >= floor_int: 
+                left_count += 1
+    
+        if left_count > (midpt - floor_int + 1): 
+            ceil_int = midpt
+        else:
+            floor_int = midpt + 1
+        
+    return floor_int
+
+
 
 
 
