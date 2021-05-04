@@ -2,30 +2,24 @@ import unittest
 
 
 def find_rotation_point(words):
+
+    # Find the rotation point in the list
+    floor_index = 0
+    ceiling_index = len(words) - 1
     
-    def find_point(words, floor_index, ceiling_index): 
+    while ceiling_index - floor_index > 1:
         
-        if ceiling_index - floor_index > 1: 
-  
-            halfway = (floor_index + ceiling_index) // 2
+        halfway = (floor_index + ceiling_index) // 2
         
-            if words[halfway] < words[floor_index]: 
-                # rotation point must be between floor_index & halfway
-                return find_point(words, floor_index, halfway)
+        if words[halfway] > words[0]:
+            # rotation point is to the right of halfway point
+            floor_index = halfway 
         
-            if words[halfway] > words[ceiling_index]: 
-                # rotation point be between halfway and ceiling_index
-                return find_point(words, halfway, ceiling_index)    
-        else: 
-            # only two words to compare: floor and ceiling
-            # determine which one is the rotation point 
-        
-            if words[floor_index] < words[ceiling_index]:
-                return floor_index
-            else: 
-                return ceiling_index
-                
-    return find_point(words, 0, len(words) - 1)
+        else:
+            # rotation point is to the left of halfway point
+            ceiling_index = halfway 
+
+    return ceiling_index 
 
 
 
