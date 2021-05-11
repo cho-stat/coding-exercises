@@ -4,27 +4,36 @@ import unittest
 def find_second_largest(root_node):
 
     # Find the second largest item in the binary search tree
-
-    largest = float('-Inf')
-    second_largest = float('-Inf')
     
-    node_list = [root_node]
+    def find_rightmost(root_node): 
+        node_list = [(root_node, None)]
+        while len(node_list) > 0: 
+            node, parent_node = node_list.pop()
+            if node.right: 
+                # we can go further right than node.right
+                node_list.append((node.right, node))
+        return (node, parent_node)
+        
+    node, parent_node = find_rightmost(root_node)
+    # this is the furthest right leaf node
+    # four possible cases for largest and second largest
+    if node.left and node.left.right: 
+        # node.left exists and has a right child
+        # node.left < node.left.right < node
+        # find the rightmost node 
+        second_rightmost_node, xx = find_rightmost(node.left)
+        second_largest = second_rightmost_node.value
+                
+    elif node.left: 
+        # node.left exists but has no right child
+        # parent_node < node.left < node 
+        second_largest = node.left.value
     
-    while len(node_list) > 0: 
-        node = node_list.pop()
-        
-        if node.right: 
-            node_list.append(node.right)
+    else:
+        # node is a leaf node 
+        # parent_node < node 
+        second_largest = parent_node.value 
             
-        if node.left: 
-            node_list.append(node.left)
-        
-        if node.value > second_largest and node.value < largest:
-            second_largest = node.value
-            
-        if node.value > largest: 
-            second_largest = largest
-            largest = node.value
         
     return second_largest
 
