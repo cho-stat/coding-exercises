@@ -14,11 +14,8 @@ def max_duffel_bag_value(cake_tuples, weight_capacity):
             if wt > cap: 
                 break 
             else: # wt < n
-                max_cakes = cap // wt 
-                for i in range(1, max_cakes+1): 
-                    # best cost if you take i of the cake
-                    cost_with_i_cakes = cost*i + max_values_at_capacities[cap - i*wt]
-                    max_values_at_capacities[cap] = max(cost_with_i_cakes, max_values_at_capacities[cap])
+                cost_with_cake = cost + max_values_at_capacities[cap - wt]
+                max_values_at_capacities[cap] = max(cost_with_cake, max_values_at_capacities[cap])
 
     return max_values_at_capacities[weight_capacity]
 
