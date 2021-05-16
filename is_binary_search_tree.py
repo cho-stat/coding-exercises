@@ -5,24 +5,20 @@ def is_binary_search_tree(root):
 
     # Determine if the tree is a valid binary search tree
 
-    nodes = [(root, lambda x, y: True, root.value)]
+    # format is (node, upper bound, lower bound)
+    node_list = [(root, float("Inf"), float("-Inf"))]
     
-    while len(nodes) > 0:
-        node, compare_with_prev, prev_val = nodes.pop()
+    while len(node_list) > 0: 
+        node, ub, lb = node_list.pop()
+        if node.value > ub or node.value < lb: 
+            return False
+        else: 
+            if node.left: 
+                node_list.append((node.left, node.value, lb))
+            if node.right: 
+                node_list.append((node.right, ub, node.value))
     
-        if node.left:
-            if node.left.value < node.value and compare_with_prev(node.left.value, prev_val): 
-                nodes.append((node.left, lambda x, y: x < y, node.value))
-            else: 
-                return False 
-                
-        if node.right:
-            if node.right.value > node.value and compare_with_prev(node.right.value, prev_val): 
-                nodes.append((node.right, lambda x, y: x > y, node.value))
-            else:
-                return False
-    
-    return True 
+    return True
 
 
 
