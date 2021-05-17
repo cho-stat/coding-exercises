@@ -4,16 +4,23 @@ import unittest
 def contains_cycle(first_node):
 
     # Check if the linked list contains a cycle
-    nodes_with_links = set()
+    slow_runner = first_node
+    fast_runner = first_node 
     
-    node = first_node
-    while node.next: 
-        if node.next in nodes_with_links: 
+    while slow_runner.next: # only terminates if the end is found 
+        next_slow_node = slow_runner.next
+        slow_runner = next_slow_node
+        
+        if fast_runner.next.next: 
+            next_fast_node = fast_runner.next.next
+            fast_runner = next_fast_node
+        else: # we've hit an end
+            return False
+        
+        if slow_runner.value == fast_runner.value: 
+            # we've found a cycle 
             return True 
-        else: 
-            nodes_with_links.add(node.next)
-        node = node.next
-
+        
     return False
 
 
