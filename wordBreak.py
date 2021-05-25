@@ -1,15 +1,20 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         word_set = set(wordDict)
-    
-        word_queue = [s]
-        while word_queue:
-            word = word_queue.pop()
-            n = len(word)
-            for i in range(1, n+1):
-                if word[:i] in word_set: 
-                    if word[i:]: # there are letters left?
-                        word_queue.append(word[i:])
+        n = len(s)
+        
+        index_queue = [0]
+        visited = set()
+        while index_queue:
+            start = index_queue.pop()
+            if start in visited: 
+                continue
+            for i in range(start+1, n+1):
+                if s[start:i] in word_set: 
+                    if s[i:]: # there are letters left?
+                        print(s[start:i] + ',' + s[i:] + ',' + str(i))
+                        index_queue.append(i)
                     else: # there are no letters left
                         return True
-        return False         
+            visited.add(start)
+        return False      
